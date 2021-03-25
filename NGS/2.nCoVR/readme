@@ -1,10 +1,13 @@
-2. nCoVR.MN908947
+##数据来源
+
+1. nCoVR.MN908947
+下载
 https://www.ncbi.nlm.nih.gov/nuccore/NC_045512
 
 wget https://ftp.cngb.org/pub/Dataset/datadis19/SRP245409/SRR10971381/WH_R1.fastq.gz
 wget https://ftp.cngb.org/pub/Dataset/datadis19/SRP245409/SRR10971381/WH_R2.fastq.gz
 
-
+处理
 gzip -dc WH_R1.fastq |head -800000 |gzip -9 > nCoVR.WH_1.fastq.gz
 gzip -dc WH_R2.fastq |head -800000 |gzip -9 > nCoVR.WH_2.fastq.gz
 
