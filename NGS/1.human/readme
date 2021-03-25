@@ -1,0 +1,34 @@
+下载：
+
+1. NA12878
+WGS:
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR622/SRR622461/SRR622461_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR622/SRR622461/SRR622461_2.fastq.gz
+
+Transcriptome:
+wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/SRR1258218/SRR1258218.1
+
+WES:
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR151/008/SRR1518158/SRR1518158_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR151/008/SRR1518158/SRR1518158_2.fastq.gz
+
+VCF:
+wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/release/20190312_biallelic_SNV_and_INDEL/ALL.chr21.shapeit2_integrated_snvindels_v2a_27022019.GRCh38.phased.vcf.gz
+
+
+
+
+处理：
+gzip -dc SRR1518158_2.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.WES_2.fastq.gz
+gzip -dc SRR1518158_1.fastq.gz |head -400000 |gzip -9 >  ./1.human/NA12878.WES_1.fastq.gz
+gzip -dc SRR622461_1.fastq.gz  |head -400000 |gzip -9 > ./1.human/NA12878.WGS_1.fastq.gz
+gzip -dc SRR622461_2.fastq.gz  |head -400000 |gzip -9 > ./1.human/NA12878.WGS_2.fastq.gz
+gzip -dc SRR1258218.1_1.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.RNAseq_1.fastq.gz
+gzip -dc SRR1258218.1_2.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.RNAseq_2.fastq.gz
+
+bwa index hg19.chr21.fasta
+bwa  mem -t 10 -M -Y  -R "@RG\tID:NA12878.1\tLB:NA12878\tSM:NA12878\tPL:ILLUMINA" ./hg19.chr21.fasta NA12878.WGS_1.fastq.gz NA12878.WGS_2.fastq.gz | samtools view -Sb -o  NA12878.WGS.bam -
+bwa  mem -t 10 -M -Y  -R "@RG\tID:NA12878.1\tLB:NA12878\tSM:NA12878\tPL:ILLUMINA" ./hg19.chr21.fasta NA12878.WES_1.fastq.gz NA12878.WES_2.fastq.gz | samtools view -Sb -o  NA12878.WES.bam -
+
+gzip -dc  ALL.chr21.shapeit2_integrated_snvindels_v2a_27022019.GRCh38.phased.vcf.gz| cut -f 1-9,1792 |gzip -9  > chr21.hg38.vcf.gz
+
