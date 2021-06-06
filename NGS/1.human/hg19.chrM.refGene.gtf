@@ -1,0 +1,2 @@
+chrM	refGene	transcript	7445	7515	.	-	.	gene_id "MIR12136"; transcript_id "NR_162149_2";  gene_name "MIR12136";
+chrM	refGene	exon	7445	7515	.	-	.	gene_id "MIR12136"; transcript_id "NR_162149_2"; exon_number "1"; exon_id "NR_162149_2.1"; gene_name "MIR12136";

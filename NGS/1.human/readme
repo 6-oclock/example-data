@@ -21,16 +21,16 @@ wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_proj
 
 
 处理：
-gzip -dc SRR1518158_2.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.WES_2.fastq.gz
-gzip -dc SRR1518158_1.fastq.gz |head -400000 |gzip -9 >  ./1.human/NA12878.WES_1.fastq.gz
-gzip -dc SRR622461_1.fastq.gz  |head -400000 |gzip -9 > ./1.human/NA12878.WGS_1.fastq.gz
-gzip -dc SRR622461_2.fastq.gz  |head -400000 |gzip -9 > ./1.human/NA12878.WGS_2.fastq.gz
-gzip -dc SRR1258218.1_1.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.RNAseq_1.fastq.gz
-gzip -dc SRR1258218.1_2.fastq.gz |head -400000 |gzip -9 > ./1.human/NA12878.RNAseq_2.fastq.gz
+gzip -dc SRR1518158_2.fastq.gz |head -100000 |gzip -9 > ./1.human/NA12878.WES_2.fastq.gz
+gzip -dc SRR1518158_1.fastq.gz |head -100000 |gzip -9 >  ./1.human/NA12878.WES_1.fastq.gz
+gzip -dc SRR622461_1.fastq.gz  |head -100000 |gzip -9 > ./1.human/NA12878.WGS_1.fastq.gz
+gzip -dc SRR622461_2.fastq.gz  |head -100000 |gzip -9 > ./1.human/NA12878.WGS_2.fastq.gz
+gzip -dc SRR1258218.1_1.fastq.gz |head -100000 |gzip -9 > ./1.human/NA12878.RNAseq_1.fastq.gz
+gzip -dc SRR1258218.1_2.fastq.gz |head -100000 |gzip -9 > ./1.human/NA12878.RNAseq_2.fastq.gz
 
 bwa index hg19.chr21.fasta
 bwa  mem -t 10 -M -Y  -R "@RG\tID:NA12878.1\tLB:NA12878\tSM:NA12878\tPL:ILLUMINA" ./hg19.chr21.fasta NA12878.WGS_1.fastq.gz NA12878.WGS_2.fastq.gz | samtools view -Sb -o  NA12878.WGS.bam -
 bwa  mem -t 10 -M -Y  -R "@RG\tID:NA12878.1\tLB:NA12878\tSM:NA12878\tPL:ILLUMINA" ./hg19.chr21.fasta NA12878.WES_1.fastq.gz NA12878.WES_2.fastq.gz | samtools view -Sb -o  NA12878.WES.bam -
 
-gzip -dc  ALL.chr21.shapeit2_integrated_snvindels_v2a_27022019.GRCh38.phased.vcf.gz| cut -f 1-9,1792 |gzip -9  > chr21.hg38.vcf.gz
+gzip -dc  ALL.chr21.shapeit2_integrated_snvindels_v2a_27022019.GRCh38.phased.vcf.gz| cut -f 1-9,1792 |head 2000|gzip -9  > chr21.hg38.vcf.gz
 
