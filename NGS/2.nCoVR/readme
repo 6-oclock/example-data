@@ -8,7 +8,7 @@ wget https://ftp.cngb.org/pub/Dataset/datadis19/SRP245409/SRR10971381/WH_R1.fast
 wget https://ftp.cngb.org/pub/Dataset/datadis19/SRP245409/SRR10971381/WH_R2.fastq.gz
 
 处理
-gzip -dc WH_R1.fastq |head -800000 |gzip -9 > nCoVR.WH_1.fastq.gz
-gzip -dc WH_R2.fastq |head -800000 |gzip -9 > nCoVR.WH_2.fastq.gz
+gzip -dc WH_R1.fastq |head -100000 |gzip -9 > nCoVR.WH_1.fastq.gz
+gzip -dc WH_R2.fastq |head -100000 |gzip -9 > nCoVR.WH_2.fastq.gz
 
 bwa  mem -t 10 -M -Y  -R "@RG\tID:nCoVR_WH.1\tLB:nCoVR_WH\tSM:nCoVR_WH\tPL:ILLUMINA" nCoVR.MN908947.fasta_index/nCoVR.MN908947.fasta nCoVR.WH_1.fastq.gz nCoVR.WH_2.fastq.gz | samtools view -Sb -o  nCoVR_WH.bam -
